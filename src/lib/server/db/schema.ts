@@ -1,12 +1,19 @@
-import { serial, text, pgSchema } from "drizzle-orm/pg-core";
+import { text, integer, varchar, pgTable, timestamp, doublePrecision, uuid, } from "drizzle-orm/pg-core";
 
-export const mySchema = pgSchema("my_schema");
-
-export const colors = mySchema.enum('colors', ['red', 'green', 'blue']);
-
-export const mySchemaUsers = mySchema.table('users', {
-  id: serial('id').primaryKey(),
-  name: text('name'),
-  color: colors('color').default('red'),
+export const teams = pgTable('teams', {
+  id: uuid('id').defaultRandom().primaryKey(),
+  team_number: integer().notNull(),
+  team_name: text('team_name'),
+  team_email: varchar({ length: 255 }).notNull().unique(),
 });
+
+
+export const competitions = pgTable('competitions', {
+  id: uuid('id').defaultRandom().primaryKey(),
+  competition_name: text('competition_name').notNull(),
+  start_time: timestamp('start_time', { withTimezone: true }).notNull(),
+  end_time: timestamp('end_time', { withTimezone: true }).notNull(),
+  latitude: doublePrecision('latitude'),
+  longitude: doublePrecision('longitude'),
+})
 
