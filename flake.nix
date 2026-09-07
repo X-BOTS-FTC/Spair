@@ -1,6 +1,6 @@
 # flake.nix
 {
-  description = "PartsWarehouse [working name] dev environment";
+  description = "Spair dev environment";
 
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";

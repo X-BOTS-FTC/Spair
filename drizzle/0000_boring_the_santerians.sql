@@ -1,5 +1,14 @@
 CREATE TYPE "public"."item_status" AS ENUM('pending', 'approved', 'rejected');--> statement-breakpoint
 CREATE TYPE "public"."item_tag" AS ENUM('service', 'part', 'printable', 'common', 'set');--> statement-breakpoint
+CREATE TABLE "competitions" (
+	"id" uuid PRIMARY KEY DEFAULT gen_random_uuid() NOT NULL,
+	"competition_name" text NOT NULL,
+	"start_time" timestamp with time zone NOT NULL,
+	"end_time" timestamp with time zone NOT NULL,
+	"latitude" double precision,
+	"longitude" double precision
+);
+--> statement-breakpoint
 CREATE TABLE "item_components" (
 	"id" uuid PRIMARY KEY DEFAULT gen_random_uuid() NOT NULL,
 	"kit_id" uuid NOT NULL,
@@ -63,7 +72,15 @@ CREATE TABLE "sessions" (
 	"expires_at" timestamp with time zone NOT NULL
 );
 --> statement-breakpoint
-ALTER TABLE "teams" ADD COLUMN "password_hash" text;--> statement-breakpoint
+CREATE TABLE "teams" (
+	"id" uuid PRIMARY KEY DEFAULT gen_random_uuid() NOT NULL,
+	"team_number" integer NOT NULL,
+	"team_name" text,
+	"team_email" varchar(255) NOT NULL,
+	"password_hash" text,
+	CONSTRAINT "teams_team_email_unique" UNIQUE("team_email")
+);
+--> statement-breakpoint
 ALTER TABLE "item_components" ADD CONSTRAINT "item_components_kit_id_items_id_fk" FOREIGN KEY ("kit_id") REFERENCES "public"."items"("id") ON DELETE no action ON UPDATE no action;--> statement-breakpoint
 ALTER TABLE "item_components" ADD CONSTRAINT "item_components_component_item_id_items_id_fk" FOREIGN KEY ("component_item_id") REFERENCES "public"."items"("id") ON DELETE no action ON UPDATE no action;--> statement-breakpoint
 ALTER TABLE "items" ADD CONSTRAINT "items_proposed_by_team_id_teams_id_fk" FOREIGN KEY ("proposed_by_team_id") REFERENCES "public"."teams"("id") ON DELETE no action ON UPDATE no action;--> statement-breakpoint
