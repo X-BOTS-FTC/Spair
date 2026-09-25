@@ -1,2 +1,11 @@
-<h1>Welcome to SvelteKit</h1>
-<p>Visit <a href="https://svelte.dev/docs/kit">svelte.dev/docs/kit</a> to read the documentation</p>
+<script lang="ts">
+  let { data } = $props();
+</script>
+
+<h1>Competitions</h1>
+
+<ul>
+  {#each data.competitions as competition}
+    <li><a href="/events/{competition.id}">{competition.competition_name}</a></li>
+  {/each}
+</ul>
