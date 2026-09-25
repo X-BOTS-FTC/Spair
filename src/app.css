@@ -1,16 +1,28 @@
 :root {
   --color-bg: #F7F8F5;
+  --color-bg-accent: #7a875e;
   --color-text: #1A1D1C;
   --color-accent-link: #3E5C76;
   --color-accent-urgent: #D9A32C;
   --color-border: #D8DAD5;
 
-  --font-mono: 'IBM Plex Mono', ui-monospace, monospace;
-  --font-sans: 'Public Sans', ui-sans-serif, sans-serif;
+  --font-mono: 'Overpass Mono Variable', ui-monospace, monospace;
+  --font-sans: 'Overpass Variable', ui-sans-serif, sans-serif;
+}
+
+header { 
+  font-family: var(--font-sans);
+  font-weight: 700;
 }
 
 body {
   background-color: var(--color-bg);
   color: var(--color-text);
   font-family: var(--font-sans);
+  margin: 0;
 }
+
+a {
+  color: var(--color-accent-link);
+}
+
