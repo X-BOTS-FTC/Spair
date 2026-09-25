@@ -1,0 +1,16 @@
+:root {
+  --color-bg: #F7F8F5;
+  --color-text: #1A1D1C;
+  --color-accent-link: #3E5C76;
+  --color-accent-urgent: #D9A32C;
+  --color-border: #D8DAD5;
+
+  --font-mono: 'IBM Plex Mono', ui-monospace, monospace;
+  --font-sans: 'Public Sans', ui-sans-serif, sans-serif;
+}
+
+body {
+  background-color: var(--color-bg);
+  color: var(--color-text);
+  font-family: var(--font-sans);
+}
