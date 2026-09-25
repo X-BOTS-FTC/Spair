@@ -3,7 +3,7 @@
 // after clearing the relevant tables yourself (not idempotent, by design).
 
 import { db } from '../src/lib/server/db';
-import { teams, competitions, items } from '../src/lib/server/db/schema';
+import { teams, competitions, items, listings, requests, requestItems } from '../src/lib/server/db/schema';
 
 async function seed() {
   // 1. A fake competition
@@ -55,6 +55,35 @@ async function seed() {
       status: 'approved',
     })
     .returning();
+
+  const [listing] = await db
+    .insert(listings)
+    .values({
+      item_id: neo.id,
+      team_id: teamA.id,
+      competition_id: competition.id,
+      description: 'Spare NEO motor, barely used',
+      quantity: '1',
+    })
+    .returning();
+
+    const [request] = await db
+      .insert(requests)
+      .values({
+        team_id: teamB.id,
+        competition_id: competition.id,
+        description: 'Need a 1/4-20 tap to fix a stripped hole',
+        soft_deadline: new Date('2026-09-10T14:00:00-05:00'),
+        hard_deadline: new Date('2026-09-10T16:00:00-05:00'),
+      })
+      .returning();
+
+  // 6. Link the request to the tap item via request_items
+  await db.insert(requestItems).values({
+    request_id: request.id,
+    item_id: driver.id,
+  });
+
 
   console.log('Seeded:', { competition, teamA, teamB, driver, neo });
 }
